@@ -39,7 +39,7 @@ export default function AdminIndex() {
             }}
             className="m-5 flex h-20 items-center justify-between rounded bg-cover bg-center p-5 text-white"
           >
-            <Link to={`recipies/${recipe.id}`}>{recipe.name}</Link>
+            <Link to={`/recipies/${recipe.id}`}>{recipe.name}</Link>
             <div>
               <Form method="delete">
                 <input type="hidden" name="id" value={recipe.id} />
