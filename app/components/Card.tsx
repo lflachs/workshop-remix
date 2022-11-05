@@ -1,5 +1,3 @@
-import { Link } from "@remix-run/react";
-import Logo from "../assets/Logo.svg";
 import ConditionalLink from "./ConditionnalLink";
 
 interface CardProps {

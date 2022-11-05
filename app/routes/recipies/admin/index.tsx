@@ -37,7 +37,7 @@ export default function AdminIndex() {
               backgroundImage: `url(${recipe.image}), linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5))`,
               backgroundBlendMode: "overlay",
             }}
-            className="m-5 flex h-20 items-center justify-between rounded bg-cover bg-center p-5 text-white"
+            className="m-5 flex h-40 items-center justify-between rounded bg-cover bg-center p-5 text-white"
           >
             <Link to={`/recipies/${recipe.id}`}>{recipe.name}</Link>
             <div>

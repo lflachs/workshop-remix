@@ -1,15 +1,17 @@
-import { Link, Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useCatch, useLoaderData, useParams } from "@remix-run/react";
 import type { LoaderArgs } from "@remix-run/server-runtime";
 import { json } from "@remix-run/server-runtime";
 import { getRecipie } from "~/models/recipies.server";
+import { ErrorFallback } from "../../components/ErrorFallback";
 
 export async function loader({ params }: LoaderArgs) {
   const { id } = params;
   if (!id) throw new Error("This should be impossible");
   const recipie = await getRecipie(id);
-  if (!id) {
-    throw new Error("Post not found");
+  if (!recipie) {
+    throw new Response("not found", { status: 404 });
   }
+
   return json({ recipie });
 }
 
@@ -30,4 +32,19 @@ export default function RecipiePage() {
       <Outlet />
     </main>
   );
+}
+
+export function CatchBoundary() {
+  const caught = useCatch();
+  const params = useParams();
+
+  if (caught.status === 404) {
+    return (
+      <ErrorFallback>
+        There was no recipie found with the following id "{params.id}"
+      </ErrorFallback>
+    );
+  }
+
+  throw new Error(`Unexpected caught response with status: ${caught.status}`);
 }

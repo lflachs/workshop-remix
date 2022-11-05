@@ -7,13 +7,13 @@ async function seed() {
   const email = "rachel@remix.run";
 
   // cleanup the existing database
-  await prisma.user.delete({ where: { email } }).catch(() => {
-    // no worries if it doesn't exist yet
-  });
+  await prisma.user.delete({ where: { email } }).catch(() => {});
+
+  await prisma.recipie.deleteMany().catch(() => {});
 
   const hashedPassword = await bcrypt.hash("racheliscool", 10);
 
-  const user = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email,
       password: {
@@ -24,19 +24,21 @@ async function seed() {
     },
   });
 
-  await prisma.note.create({
+  await prisma.recipie.create({
     data: {
-      title: "My first note",
-      body: "Hello, world!",
-      userId: user.id,
+      name: "Pancakes",
+      description: "Some delicious pancakes",
+      image:
+        "https://assets.afcdn.com/recipe/20211222/126211_w1024h1024c1cx1075cy827.jpg",
     },
   });
 
-  await prisma.note.create({
+  await prisma.recipie.create({
     data: {
-      title: "My second note",
-      body: "Hello, world!",
-      userId: user.id,
+      name: "Pasta",
+      description: "Some delicious pasta",
+      image:
+        "https://www.madamecuisine.de/wp-content/uploads/2022/07/pasta-al-pomodoro-featured.jpg",
     },
   });
 
